@@ -1,7 +1,7 @@
 
 const cartSummary = document.getElementById("cart-summary");
 const itemsParent = document.getElementById("products-root");
-const orderModal = document.getElementById("orderConfirmation")
+const orderModalWindow = document.getElementById("order-confirmation")
 
 function InstantiateItem(data, onClick){
 
@@ -68,7 +68,25 @@ function UpdateCartInfo(count, sum){
     cartSummary.children[1].innerText = sum;
 }
 
+function SetActiveModalWindow(value){
+    orderModalWindow.style.display = value ? "block" : "none";
+}
+
+function ValidateCheckoutForm(){
+    var confirmButton = document.getElementById("confirm-order");
+
+    confirmButton.disabled = IsEmpty(customerName);
+
+    if(!confirmButton.disabled){
+        confirmButton.disabled = IsEmpty(customerEmail);
+    }
+}
+
 function IsEmpty(value)
 {
-    return !value || value.replace(/\s/g, "").indexOf(" ") != -1;
+    return !value || StripWhitespace(value).indexOf(" ") != -1;
+}
+
+function StripWhitespace(value){
+    return value.replace(/\s/g, "");
 }

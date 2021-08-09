@@ -15,10 +15,12 @@ function InstantiateProducts(){
 
 InstantiateProducts();
 
-function AddItemToCart(itemId, count){
+function AddItemToCart(itemId, count)
+{
     let existingItem = shoppingCart.find(x => x.id == itemId);
 
-    if(existingItem){
+    if(existingItem)
+    {
         existingItem.count += 1;
     }
     else
@@ -39,7 +41,10 @@ function AddItemToCart(itemId, count){
     UpdateCartInfo(totalCount, totalSum);
 }
 
-function OnClickItem(itemId, count){
+function OnClickItem(itemId, count)
+{
+    document.getElementById(itemId).getElementsByClassName("qty__item")[0].value = 1;
+
     AddItemToCart(itemId, count);
 }
 
@@ -66,37 +71,32 @@ function OnFilter(value){
 }
 
 function Checkout(){
-    var modal = document.getElementById("order-confirmation");
-    modal.style.display = "block";
+    SetActiveModalWindow(true);
 
     var span = document.getElementsByClassName("close")[0];
-    span.onclick = () => {modal.style.display = "none"};
+    span.onclick = () => SetActiveModalWindow(false);
 
     window.onclick = (event) => {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target == orderModalWindow) {
+            SetActiveModalWindow(false);
         }
     }
 
     ValidateCheckoutForm();
 }
 
-function ValidateCheckoutForm(){
-    var confirmButton = document.getElementById("confirm-order");
-
-    confirmButton.disabled = IsEmpty(customerName);
-
-    if(!confirmButton.disabled){
-        confirmButton.disabled = IsEmpty(customerEmail);
-    }
-}
-
 function OnName(value){
+
+    document.getElementById("name").value = StripWhitespace(value);
+
     customerName = value;
     ValidateCheckoutForm();
 }
 
 function OnEmail(value){
+
+    document.getElementById("email").value = StripWhitespace(value);
+
     customerEmail = value;
     ValidateCheckoutForm();
 }
@@ -118,8 +118,8 @@ function ProceedOrder()
 
 function SendForm(){
     let form = {
-        user: customerName,
-        email: customerEmail,
+        user: StripWhitespace(customerName),
+        email: StripWhitespace(customerEmail),
         order: shoppingCart.map((item) => {
             return {itemId: item.id, count: item.count}
         })
@@ -129,6 +129,11 @@ function SendForm(){
 }
 
 function Dispose(){
+    SetActiveModalWindow(false);
     shoppingCart = [];
     UpdateCartInfo(0,0);
+
+    spawnedItems.forEach(x =>{
+        x.getElementsByClassName("qty__item")[0].value = 1;
+    });
 }
