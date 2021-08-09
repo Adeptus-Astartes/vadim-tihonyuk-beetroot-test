@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test task JavaScript advanced</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-container pt-40">
+    <div class="top-cart">
+        <div class="top-cart-info">
+            <div class="container top-cart-info-container">
+                <span id="cart-summary" class="top-cart-info__item">
+                     Товаров в корзине - <span class="red-info">0</span>,
+                      на сумму <span class="red-info">0</span> грн</span>
+                <button class="btn-check" onclick="Checkout();">Оформить заказ</button>
+            </div>
+        </div><!-- /.top-cart-info -->
+
+    </div><!-- /.top-cart -->
+
+
+
+    <header class="top-header">
+        <div class="container">
+            <h1>Welcome to our site</h1>
+        </div>
+    </header>
+
+    <div class="wrap">
+        <section class="container">
+            <div class="filter-box">
+                <div class="select-box">
+                    <label class="filter-label">Категория</label>
+                    <select class="select-control" onchange="OnCategory(value);">
+                        <option value="0">Все</option>
+                        <option value="1">Завтраки</option>
+                        <option  value="2">Первые блюда</option>
+                        <option  value="3">Гарниры</option>
+                    </select>
+                </div><!-- /.select-box -->
+                <div class="price-select-box">
+                    <label class="filter-label">Цена</label>
+                    <select class="select-control" onchange="OnFilter(value);">
+                        <option value="0">Все</option>
+                        <option value="30">До 30 грн</option>
+                        <option value="50">До 50 грн</option>
+                        <option value="100">До 100 грн</option>
+                        <option value="150">До 150 грн</option>
+                    </select>
+                </div><!-- /.price-select-box -->
+            </div><!-- /filter-box-->
+
+
+
+            <div id="products-root" class="products-box grid-box"></div>
+
+        </section>
+    </div>
+
+    <div id="order-confirmation" class="modal">
+
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            
+            <label for="name">Ваше ім'я:</label>
+            <input type="text" id="name" name="name" oninput="OnName(value);"><br><br>
+
+            <label for="email">Ел. пошта:</label>
+            <input type="text" id="email" name="email" oninput="OnEmail(value);"><br><br>
+            <button id="confirm-order" class="btn-check" onclick="ProceedOrder();">Підтвердити</button>
+        </div>
+    
+    </div>
+
+    <footer class="bottom-footer bg-beetroot py-1">
+        <div class="container">
+            <div class="footer-row">
+                <div class="col-md-9 text-center">
+                    <a target="_blank" href="https://academy.beetroot.se/?">Bettroot academy &copy; <span id="bty"></span></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div><!-- /.app-container -->
+
+<script>
+document.getElementById('bty').textContent = (new Date()).getFullYear();
+</script>
+
+<script src="js/db.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>
